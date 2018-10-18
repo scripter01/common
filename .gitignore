@@ -36,4 +36,5 @@ Common/Debug/
 Common/Common/Release/
 Common/Common/Debug/
 Common/.vs/
+Common/ipch/
 Common/Common.VC.VC.opendb
