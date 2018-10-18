@@ -1,6 +1,7 @@
 #ifndef LESSON_C11_A_H
 #define LESSON_C11_A_H
 
+// Внешние шаблоны
 template<typename T>
 class ExternTemplatesTest
 {

@@ -3,6 +3,7 @@
 
 #include "lessonBase.h"
 
+// Списки инициализации
 struct SimpleStruct
 {
 	int i;
@@ -13,7 +14,7 @@ class SequenceClass
 {
 public:
 	SequenceClass(std::initializer_list<SimpleStruct> list);
-
+	
 private:
 	void print();
 
