@@ -42,7 +42,7 @@ SortedIntVector::SortedIntVector():
 
 }
 
-void SortedIntVector::insert(int number)
+SortedIntVector& SortedIntVector::insert(int number)
 {
 	//auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, IntComparer());
 	//auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [&](const int x, const int y) { m_valueMax = std::max(x,y); return x < y; });
@@ -50,6 +50,7 @@ void SortedIntVector::insert(int number)
 	//auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [&valueMax](const int x, const int y) { valueMax = std::max(x,y); return x < y; });
 	auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [this](const int x, const int y) { this->m_valueMax = std::max(x, y); return x < y; });
 	m_vec.insert(it, number);
+	return *this;
 }
 
 void SortedIntVector::print() const
@@ -125,10 +126,7 @@ void Lesson_c11::run()
 	// [](int x, int y) -> int { int z = x + y; return z; }
 
 	SortedIntVector sortedVec;
-	sortedVec.insert(1);
-	sortedVec.insert(0);
-	sortedVec.insert(100);
-	sortedVec.insert(99);
+	sortedVec.insert(1).insert(0).insert(100).insert(99);
 	sortedVec.print();
 
 	int total = 0;

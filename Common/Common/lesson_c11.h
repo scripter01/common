@@ -10,7 +10,6 @@ struct SimpleStruct
 	float f;
 };
 
-// Списки инициализации
 class SequenceClass
 {
 public:
@@ -28,7 +27,7 @@ class SortedIntVector
 {
 public:
 	SortedIntVector();
-	void insert(int number);
+	SortedIntVector& insert(int number);
 	void print() const;
 
 private:
