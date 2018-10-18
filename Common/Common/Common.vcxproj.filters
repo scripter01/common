@@ -24,12 +24,24 @@
     <ClCompile Include="lesson_c11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lessonBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lesson_c11_a.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lesson_c11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lessonBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lesson_c11_a.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

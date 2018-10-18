@@ -3,7 +3,10 @@
 
 int main()
 {
-	std::cout << "common project\n";
-	Lesson_c11 lesson_c11;
+	{
+		Lesson_c11 lesson_c11;
+		lesson_c11.run();
+	}
+
 	return 1;
 }

@@ -1,12 +1,34 @@
 #include "stdafx.h"
 #include "lesson_c11.h"
+#include "lesson_c11_a.h"
 
-Lesson_c11::Lesson_c11()
+extern template ExternTemplatesTest<int>;
+constexpr int getConstValue() { return 5; }
+
+Lesson_c11::Lesson_c11():
+	LessonBase("C++11")
 {
-	run();
+
 }
 
 void Lesson_c11::run()
 {
-	std::cout << "start lesson: C++11\n";
+	/****************************************************/
+	/*      Обобщённые константные выражения            */
+	/****************************************************/
+
+	//constexpr 
+	int some_value[getConstValue() + 7];
+	constexpr double acceleration = 9.8;
+
+	/****************************************************/
+	/*                   Внешние шаблоны                */
+	/****************************************************/
+	externTemplatesTestInt(1);
+	ExternTemplatesTest<int> externTemplatesTest(2);
+
+	/****************************************************/
+	/*                  Rvalue Reference                */
+	/****************************************************/
+	// TODO
 }

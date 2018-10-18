@@ -118,7 +118,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="lessonBase.cpp" />
     <ClCompile Include="lesson_c11.cpp" />
+    <ClCompile Include="lesson_c11_a.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
     </ClCompile>
@@ -127,7 +129,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lessonBase.h" />
     <ClInclude Include="lesson_c11.h" />
+    <ClInclude Include="lesson_c11_a.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
