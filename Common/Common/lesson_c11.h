@@ -3,6 +3,24 @@
 
 #include "lessonBase.h"
 
+struct SimpleStruct
+{
+	int i;
+	float f;
+};
+
+class SequenceClass
+{
+public:
+	SequenceClass(std::initializer_list<SimpleStruct> list);
+
+private:
+	void print();
+
+private:
+	std::vector<SimpleStruct> m_vec;
+};
+
 class Lesson_c11: public LessonBase
 {
 public:

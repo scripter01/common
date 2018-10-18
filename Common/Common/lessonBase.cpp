@@ -3,10 +3,10 @@
 
 LessonBase::LessonBase(char* lessonName)
 {
-	std::cout << "start lesson: " << lessonName << "\n";
+	std::cout << "start lesson: " << lessonName << "\n\n";
 }
 
 LessonBase::~LessonBase()
 {
-	std::cout << "end lesson";
+	std::cout << "\nend lesson\n\n";
 }
