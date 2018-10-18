@@ -10,6 +10,7 @@ struct SimpleStruct
 	float f;
 };
 
+// Списки инициализации
 class SequenceClass
 {
 public:
@@ -21,6 +22,20 @@ private:
 private:
 	std::vector<SimpleStruct> m_vec;
 };
+
+// Лямбда - функции и выражения
+class SortedIntVector
+{
+public:
+	SortedIntVector();
+	void insert(int number);
+	void print() const;
+
+private:
+	std::vector<int> m_vec;
+	int m_valueMax;
+};
+
 
 class Lesson_c11: public LessonBase
 {
