@@ -5,7 +5,25 @@
 /****************************************************/
 /*                initializer list                  */
 /****************************************************/
+struct SimpleStruct
+{
+	int i;
+	float f;
+};
+
 SimpleStruct getSimpleStructDefault() { return{ 1, 1.2f }; }
+
+class SequenceClass
+{
+public:
+	SequenceClass(std::initializer_list<SimpleStruct> list);
+
+private:
+	void print();
+
+private:
+	std::vector<SimpleStruct> m_vec;
+};
 
 SequenceClass::SequenceClass(std::initializer_list<SimpleStruct> list)
 {
@@ -96,11 +114,17 @@ struct IntComparer
 	};
 };
 
-SortedIntVector::SortedIntVector() :
-	m_valueMax(0)
+class SortedIntVector
 {
+public:
+	SortedIntVector() : m_valueMax(0) {}
+	SortedIntVector& insert(int number);
+	void print() const;
 
-}
+private:
+	std::vector<int> m_vec;
+	int m_valueMax;
+};
 
 SortedIntVector& SortedIntVector::insert(int number)
 {
@@ -144,6 +168,19 @@ void lambdaFunctionsAndExpressionsTest()
 /****************************************************/
 /*         object construction improvement          */
 /****************************************************/
+// Улучшение конструкторов объектов
+class ImproveConstructionClass
+{
+public:
+	ImproveConstructionClass(int _intValue) : intValue(_intValue) {}
+	ImproveConstructionClass() : ImproveConstructionClass(42) {}
+	void print() const { std::cout << "Test \"improve construction class\": " << intValue << " " << floatValue << "\n"; }
+
+private:
+	int intValue;
+	float floatValue = 10.5f;
+};
+
 void objectConstructionImprovementTest()
 {
 	ImproveConstructionClass improveConstructionClass;
@@ -153,6 +190,18 @@ void objectConstructionImprovementTest()
 /****************************************************/
 /*  defaulted and deleted special member functions  */
 /****************************************************/
+class SpecifierTestClass
+{
+public:
+	SpecifierTestClass() = default;
+	SpecifierTestClass(int x) { m_value = x; }
+	SpecifierTestClass(float x) = delete;
+	void print() const { std::cout << "Test \"specifiers\": " << m_value << "\n"; }
+
+private:
+	int m_value = 5; // + улучшение конструкторов объектов
+};
+
 void defaultedAndDeletedTest()
 {
 	//SpecifierTestClass specifierTestClass(10.5f); //error
@@ -163,6 +212,28 @@ void defaultedAndDeletedTest()
 /****************************************************/
 /*           explicit overrides and final           */
 /****************************************************/
+struct InheritanceA
+{
+	virtual void insert(int number) {}
+	virtual void print() const {}
+};
+
+struct InheritanceB : public InheritanceA
+{
+	//virtual void insort(int number) override {} // error
+	virtual void print() const final {}
+};
+
+struct InheritanceC final : InheritanceB
+{
+	//virtual void print() const final {}; // error: final in base class
+};
+
+/* error: C is final class
+struct InheritanceD : public InheritanceC
+{};
+*/
+
 void overridesAndFinalTest()
 {
 	InheritanceC inheritanceTest;
@@ -183,6 +254,12 @@ void nullPointerConstantTest()
 /****************************************************/
 /*             strongly typed enumerations          */
 /****************************************************/
+enum class UintEnum : unsigned int
+{
+	ONE,
+	TWO
+};
+
 void stronglyTypedEnumerationsTest()
 {
 	std::cout << "Test \"enum\": " << static_cast<unsigned int>(UintEnum::ONE) << " " << static_cast<unsigned int>(UintEnum::TWO) << "\n";
@@ -194,11 +271,6 @@ void stronglyTypedEnumerationsTest()
 void rValueReferenceTest()
 {
 	// TODO
-}
-
-Lesson_c11::Lesson_c11():
-	LessonBase("C++11")
-{
 }
 
 void Lesson_c11::run()
