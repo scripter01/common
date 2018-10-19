@@ -64,8 +64,8 @@ void SortedIntVector::print() const
 }
 
 // Константа нулевого указателя
-void foo(char*) { std::cout << 1 << "\n"; }
-void foo(int) { std::cout << 2 << "\n"; }
+void foo(char*) { std::cout << "Test \"nullptr\": " << 1 << "\n"; }
+void foo(int) { std::cout << "Test \"nullptr\": " <<  2 << "\n"; }
 
 Lesson_c11::Lesson_c11():
 	LessonBase("C++11")
@@ -163,6 +163,11 @@ void Lesson_c11::run()
 	foo(NULL); // call foo(int);
 	foo(nullptr); // call foo(char *)
 
+	/****************************************************/
+	/*          Перечисления со строгой типизацией      */
+	/****************************************************/
+	std::cout << "Test \"enum\": " << static_cast<unsigned int>(UintEnum::ONE) << " " << static_cast<unsigned int>(UintEnum::TWO) << "\n";
+	
 	/****************************************************/
 	/*                  Rvalue Reference                */
 	/****************************************************/

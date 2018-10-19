@@ -84,6 +84,13 @@ struct InheritanceD : public InheritanceC
 {};
 */
 
+//Перечисления со строгой типизацией
+enum class UintEnum : unsigned int 
+{ 
+	ONE, 
+	TWO
+};
+
 class Lesson_c11: public LessonBase
 {
 public:
