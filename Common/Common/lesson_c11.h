@@ -35,6 +35,18 @@ private:
 	int m_valueMax;
 };
 
+// Улучшение конструкторов объектов
+class ImproveConstructionClass
+{
+public:
+	ImproveConstructionClass(int _intValue) : intValue(_intValue) {}
+	ImproveConstructionClass() : ImproveConstructionClass(42) {}
+	void print() const { std::cout << "Test \"improve construction class\": " << intValue << " " << floatValue << "\n"; }
+
+private:
+	int intValue;
+	float floatValue = 10.5f;
+};
 
 class Lesson_c11: public LessonBase
 {
