@@ -61,6 +61,29 @@ private:
 	int m_value = 5; // + улучшение конструкторов объектов
 };
 
+//явное замещение виртуальных функций и финальность
+struct InheritanceA
+{
+	virtual void insert(int number) {}
+	virtual void print() const {}
+};
+
+struct InheritanceB: public InheritanceA
+{
+	//virtual void insort(int number) override {} // error
+	virtual void print() const final {}
+};
+
+struct InheritanceC final: InheritanceB
+{
+	//virtual void print() const final {}; // error: final in base class
+};
+
+/* error: C is final class
+struct InheritanceD : public InheritanceC
+{};
+*/
+
 class Lesson_c11: public LessonBase
 {
 public:

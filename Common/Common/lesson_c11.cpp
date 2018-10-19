@@ -63,6 +63,9 @@ void SortedIntVector::print() const
 	std::cout << "max value: " << m_valueMax << "\n";
 }
 
+// Константа нулевого указателя
+void foo(char*) { std::cout << 1 << "\n"; }
+void foo(int) { std::cout << 2 << "\n"; }
 
 Lesson_c11::Lesson_c11():
 	LessonBase("C++11")
@@ -148,6 +151,17 @@ void Lesson_c11::run()
 	//SpecifierTestClass specifierTestClass(10.5f); //error
 	SpecifierTestClass specifierTestClass;
 	specifierTestClass.print();
+
+	/****************************************************/
+	/* Явное замещение виртуальных функций и финальность*/
+	/****************************************************/
+	InheritanceC inheritanceTest;
+
+	/****************************************************/
+	/*              Константа нулевого указателя        */
+	/****************************************************/
+	foo(NULL); // call foo(int);
+	foo(nullptr); // call foo(char *)
 
 	/****************************************************/
 	/*                  Rvalue Reference                */
