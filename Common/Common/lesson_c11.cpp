@@ -143,6 +143,13 @@ void Lesson_c11::run()
 	improveConstructionClass.print();
 
 	/****************************************************/
+	/*           Спецификаторы default и delete         */
+	/****************************************************/
+	//SpecifierTestClass specifierTestClass(10.5f); //error
+	SpecifierTestClass specifierTestClass;
+	specifierTestClass.print();
+
+	/****************************************************/
 	/*                  Rvalue Reference                */
 	/****************************************************/
 	// TODO

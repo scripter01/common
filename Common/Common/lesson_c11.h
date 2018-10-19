@@ -48,6 +48,19 @@ private:
 	float floatValue = 10.5f;
 };
 
+// Спецификаторы default и delete
+class SpecifierTestClass
+{
+public:
+	SpecifierTestClass() = default;
+	SpecifierTestClass(int x) { m_value = x; }
+	SpecifierTestClass(float x) = delete;
+	void print() const { std::cout << "Test \"specifiers\": " << m_value << "\n"; }
+
+private:
+	int m_value = 5; // + улучшение конструкторов объектов
+};
+
 class Lesson_c11: public LessonBase
 {
 public:
