@@ -171,7 +171,7 @@ SortedIntVector& SortedIntVector::insert(int number)
 
 void SortedIntVector::print() const
 {
-	std::cout << "Test \"lambda function\": ";
+	std::cout << "Test \"lambda functions and expression\": ";
 	for (auto& data : m_vec) // [range-based for loop][type inference]
 	{
 		std::cout << data << ", ";
@@ -191,9 +191,10 @@ void lambdaFunctionsAndExpressionsTest()
 
 	int total = 0;
 	int value = 5;
-	[&, value](int x) { total += (x * value); } (1); //(1) вызов лямбда-функции с передачей значения 1
-	std::cout << "Test \"lambda function\": " << total << "\n";
-	auto myLambdaFunc = [] { std::cout << "Test \"lambda function\"\n"; };
+	[&, value](int x) { total += (x * value); } (1); 
+	std::cout << "Test \"lambda functions and expression\": " << total << "\n";
+
+	auto myLambdaFunc = [] { std::cout << "Test \"lambda functions and expression\"\n"; }; // [type inference]
 	myLambdaFunc();
 }
 
@@ -206,10 +207,10 @@ public:
 	SpecifierTestClass() = default;
 	SpecifierTestClass(int x) { m_value = x; }
 	SpecifierTestClass(float x) = delete;
-	void print() const { std::cout << "Test \"specifiers\": " << m_value << "\n"; }
+	void print() const { std::cout << "Test \"defaulted and deleted special member functions\": " << m_value << "\n"; }
 
 private:
-	int m_value = 5; // + улучшение конструкторов объектов
+	int m_value = 5; // [object construction improvement]
 };
 
 void defaultedAndDeletedTest()
@@ -230,7 +231,7 @@ struct InheritanceA
 
 struct InheritanceB : public InheritanceA
 {
-	//virtual void insort(int number) override {} // error
+	//virtual void insort(int number) override {} // error: name insort
 	virtual void print() const final {}
 };
 
@@ -239,8 +240,8 @@ struct InheritanceC final : InheritanceB
 	//virtual void print() const final {}; // error: final in base class
 };
 
-/* error: C is final class
-struct InheritanceD : public InheritanceC
+/* 
+struct InheritanceD : public InheritanceC // error: C is final class
 {};
 */
 
@@ -252,8 +253,8 @@ void overridesAndFinalTest()
 /****************************************************/
 /*              null pointer constant               */
 /****************************************************/
-void foo(char*) { std::cout << "Test \"nullptr\": " << 1 << "\n"; }
-void foo(int) { std::cout << "Test \"nullptr\": " << 2 << "\n"; }
+void foo(char*) { std::cout << "Test \"null pointer constant\": foo(char*)\n"; }
+void foo(int) { std::cout << "Test \"null pointer constant\": foo(int)\n"; }
 
 void nullPointerConstantTest()
 {
@@ -266,13 +267,13 @@ void nullPointerConstantTest()
 /****************************************************/
 enum class UintEnum : unsigned int
 {
-	ONE,
+	ONE = 2,
 	TWO
 };
 
 void stronglyTypedEnumerationsTest()
 {
-	std::cout << "Test \"enum\": " << static_cast<unsigned int>(UintEnum::ONE) << " " << static_cast<unsigned int>(UintEnum::TWO) << "\n";
+	std::cout << "Test \"strongly typed enumerations\": " << static_cast<unsigned int>(UintEnum::ONE) << " " << static_cast<unsigned int>(UintEnum::TWO) << "\n";
 }
 
 /****************************************************/
