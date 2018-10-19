@@ -67,23 +67,21 @@ void SortedIntVector::print() const
 void foo(char*) { std::cout << "Test \"nullptr\": " << 1 << "\n"; }
 void foo(int) { std::cout << "Test \"nullptr\": " <<  2 << "\n"; }
 
-Lesson_c11::Lesson_c11():
-	LessonBase("C++11")
+/****************************************************/
+/*                initializer list                  */
+/****************************************************/
+void initializerListTest()
 {
-}
-
-void Lesson_c11::run()
-{
-	/****************************************************/
-	/*                initializer list                  */
-	/****************************************************/
 	SimpleStruct simpleStruct{ 1, 1.2f };
 	simpleStruct = { 2, 2.4f };
 	SequenceClass sequenceClass = { getSimpleStructDefault(), simpleStruct,{ 4, 4.8f } };
+}
 
-	/****************************************************/
-	/*                  type inference                  */
-	/****************************************************/
+/****************************************************/
+/*                  type inference                  */
+/****************************************************/
+void typeInferenceTest()
+{
 	auto testInt = 2;
 	auto testFloat = 2.0f;
 	decltype(testFloat) otherIntegerVariable = 5.0f;
@@ -96,34 +94,45 @@ void Lesson_c11::run()
 		summInts += *it;
 	}
 	std::cout << "Test \"auto in cycle\": " << summInts << "\n";
+}
 
-	/****************************************************/
-	/*                range-based for loop              */
-	/****************************************************/
+/****************************************************/
+/*                range-based for loop              */
+/****************************************************/
+void rangeBasedLoopTest()
+{
 	auto summFloats = 0.0f;
 	std::vector<float> vecFloats = { 0.1f, 0.2f, 0.3f };
-	for (auto data: vecFloats)
+	for (auto data : vecFloats)
 	{
 		summFloats += data;
 	}
 	std::cout << "Test \"foreach instruction\": " << summFloats << "\n";
+}
 
-	/****************************************************/
-	/*          geralized constant expressions          */
-	/****************************************************/
-
+/****************************************************/
+/*        generalized constant expressions          */
+/****************************************************/
+void generalizedConstantExpressionsTest()
+{
 	int some_value[getConstValue() + 2] = { 1, 2, 3, 4 }; // + спискок инициализации
 	constexpr double acceleration = 9.8;
+}
 
-	/****************************************************/
-	/*                   extern template                */
-	/****************************************************/
+/****************************************************/
+/*                   extern template                */
+/****************************************************/
+void externTemplateTest()
+{
 	externTemplatesTestInt(1);
 	ExternTemplatesTest<int> externTemplatesTest(2);
+}
 
-	/****************************************************/
-	/*           lambda functions and expressions       */
-	/****************************************************/
+/****************************************************/
+/*           lambda functions and expressions       */
+/****************************************************/
+void lambdaFunctionsAndExpressionsTest()
+{
 	// [](int x, int y) { return x + y; }
 	// [this]() { this->foo(); }
 	// [](int x, int y) -> int { int z = x + y; return z; }
@@ -138,38 +147,77 @@ void Lesson_c11::run()
 	std::cout << "Test \"lambda function\": " << total << "\n";
 	auto myLambdaFunc = [] { std::cout << "Test \"lambda function\"\n"; };
 	myLambdaFunc();
+}
 
-	/****************************************************/
-	/*         object construction improvement          */
-	/****************************************************/
+/****************************************************/
+/*         object construction improvement          */
+/****************************************************/
+void objectConstructionImprovementTest()
+{
 	ImproveConstructionClass improveConstructionClass;
 	improveConstructionClass.print();
+}
 
-	/****************************************************/
-	/*  defaulted and deleted special member functions  */
-	/****************************************************/
+/****************************************************/
+/*  defaulted and deleted special member functions  */
+/****************************************************/
+void defaultedAndDeletedTest()
+{
 	//SpecifierTestClass specifierTestClass(10.5f); //error
 	SpecifierTestClass specifierTestClass;
 	specifierTestClass.print();
+}
 
-	/****************************************************/
-	/*           explicit overrides and final           */
-	/****************************************************/
+/****************************************************/
+/*           explicit overrides and final           */
+/****************************************************/
+void overridesAndFinalTest()
+{
 	InheritanceC inheritanceTest;
+}
 
-	/****************************************************/
-	/*              null pointer constant               */
-	/****************************************************/
+/****************************************************/
+/*              null pointer constant               */
+/****************************************************/
+void nullPointerConstantTest()
+{
 	foo(NULL); // call foo(int);
 	foo(nullptr); // call foo(char *)
+}
 
-	/****************************************************/
-	/*             strongly typed enumerations          */
-	/****************************************************/
+/****************************************************/
+/*             strongly typed enumerations          */
+/****************************************************/
+void stronglyTypedEnumerationsTest()
+{
 	std::cout << "Test \"enum\": " << static_cast<unsigned int>(UintEnum::ONE) << " " << static_cast<unsigned int>(UintEnum::TWO) << "\n";
-	
-	/****************************************************/
-	/*                  Rvalue Reference                */
-	/****************************************************/
+}
+
+/****************************************************/
+/*                  rvalue Reference                */
+/****************************************************/
+void rValueReferenceTest()
+{
 	// TODO
+}
+
+Lesson_c11::Lesson_c11():
+	LessonBase("C++11")
+{
+}
+
+void Lesson_c11::run()
+{
+	initializerListTest();
+	typeInferenceTest();
+	rangeBasedLoopTest();
+	generalizedConstantExpressionsTest();
+	externTemplateTest();
+	lambdaFunctionsAndExpressionsTest();
+	objectConstructionImprovementTest();
+	defaultedAndDeletedTest();
+	overridesAndFinalTest();
+	nullPointerConstantTest();
+	stronglyTypedEnumerationsTest();
+	rValueReferenceTest();
 }
