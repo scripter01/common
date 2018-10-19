@@ -2,13 +2,9 @@
 #include "lesson_c11.h"
 #include "lesson_c11_a.h"
 
-// Внешние шаблоны
-extern template ExternTemplatesTest<int>;
-
-// Обобщённые константные выражения 
-constexpr int getConstValue() { return 2; }
-
-// Списки инициализации
+/****************************************************/
+/*                initializer list                  */
+/****************************************************/
 SimpleStruct getSimpleStructDefault() { return{ 1, 1.2f }; }
 
 SequenceClass::SequenceClass(std::initializer_list<SimpleStruct> list)
@@ -20,56 +16,13 @@ SequenceClass::SequenceClass(std::initializer_list<SimpleStruct> list)
 void SequenceClass::print()
 {
 	std::cout << "Test \"initializer list\": ";
-	for (auto& data: m_vec) //  + for-цикл по коллекции  + вывод типов
+	for (auto& data : m_vec) //  + for-цикл по коллекции  + вывод типов
 	{
 		std::cout << data.i << ", " << data.f << "; ";
 	}
 	std::cout << "\n";
 }
 
-// Лямбда - функции и выражения
-struct IntComparer
-{
-	bool operator()(const int x, const int y) const
-	{
-		return x < y;
-	};
-};
-
-SortedIntVector::SortedIntVector():
-	m_valueMax(0)
-{
-
-}
-
-SortedIntVector& SortedIntVector::insert(int number)
-{
-	//auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, IntComparer());
-	//auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [&](const int x, const int y) { m_valueMax = std::max(x,y); return x < y; });
-	//int valueMax = 0;
-	//auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [&valueMax](const int x, const int y) { valueMax = std::max(x,y); return x < y; });
-	auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [this](const int x, const int y) { this->m_valueMax = std::max(x, y); return x < y; });
-	m_vec.insert(it, number);
-	return *this;
-}
-
-void SortedIntVector::print() const
-{
-	std::cout << "Test \"lambda function\": ";
-	for (auto& data : m_vec) //  + for-цикл по коллекции  + вывод типов
-	{
-		std::cout << data << ", ";
-	}
-	std::cout << "max value: " << m_valueMax << "\n";
-}
-
-// Константа нулевого указателя
-void foo(char*) { std::cout << "Test \"nullptr\": " << 1 << "\n"; }
-void foo(int) { std::cout << "Test \"nullptr\": " <<  2 << "\n"; }
-
-/****************************************************/
-/*                initializer list                  */
-/****************************************************/
 void initializerListTest()
 {
 	SimpleStruct simpleStruct{ 1, 1.2f };
@@ -113,6 +66,8 @@ void rangeBasedLoopTest()
 /****************************************************/
 /*        generalized constant expressions          */
 /****************************************************/
+constexpr int getConstValue() { return 2; }
+
 void generalizedConstantExpressionsTest()
 {
 	int some_value[getConstValue() + 2] = { 1, 2, 3, 4 }; // + спискок инициализации
@@ -122,6 +77,8 @@ void generalizedConstantExpressionsTest()
 /****************************************************/
 /*                   extern template                */
 /****************************************************/
+extern template ExternTemplatesTest<int>;
+
 void externTemplateTest()
 {
 	externTemplatesTestInt(1);
@@ -131,6 +88,41 @@ void externTemplateTest()
 /****************************************************/
 /*           lambda functions and expressions       */
 /****************************************************/
+struct IntComparer
+{
+	bool operator()(const int x, const int y) const
+	{
+		return x < y;
+	};
+};
+
+SortedIntVector::SortedIntVector() :
+	m_valueMax(0)
+{
+
+}
+
+SortedIntVector& SortedIntVector::insert(int number)
+{
+	//auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, IntComparer());
+	//auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [&](const int x, const int y) { m_valueMax = std::max(x,y); return x < y; });
+	//int valueMax = 0;
+	//auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [&valueMax](const int x, const int y) { valueMax = std::max(x,y); return x < y; });
+	auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [this](const int x, const int y) { this->m_valueMax = std::max(x, y); return x < y; });
+	m_vec.insert(it, number);
+	return *this;
+}
+
+void SortedIntVector::print() const
+{
+	std::cout << "Test \"lambda function\": ";
+	for (auto& data : m_vec) //  + for-цикл по коллекции  + вывод типов
+	{
+		std::cout << data << ", ";
+	}
+	std::cout << "max value: " << m_valueMax << "\n";
+}
+
 void lambdaFunctionsAndExpressionsTest()
 {
 	// [](int x, int y) { return x + y; }
@@ -179,6 +171,9 @@ void overridesAndFinalTest()
 /****************************************************/
 /*              null pointer constant               */
 /****************************************************/
+void foo(char*) { std::cout << "Test \"nullptr\": " << 1 << "\n"; }
+void foo(int) { std::cout << "Test \"nullptr\": " << 2 << "\n"; }
+
 void nullPointerConstantTest()
 {
 	foo(NULL); // call foo(int);
