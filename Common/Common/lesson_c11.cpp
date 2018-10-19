@@ -75,14 +75,14 @@ Lesson_c11::Lesson_c11():
 void Lesson_c11::run()
 {
 	/****************************************************/
-	/*                Списки инициализации              */
+	/*                initializer list                  */
 	/****************************************************/
 	SimpleStruct simpleStruct{ 1, 1.2f };
 	simpleStruct = { 2, 2.4f };
 	SequenceClass sequenceClass = { getSimpleStructDefault(), simpleStruct,{ 4, 4.8f } };
 
 	/****************************************************/
-	/*                   Вывод типов                    */
+	/*                  type inference                  */
 	/****************************************************/
 	auto testInt = 2;
 	auto testFloat = 2.0f;
@@ -98,7 +98,7 @@ void Lesson_c11::run()
 	std::cout << "Test \"auto in cycle\": " << summInts << "\n";
 
 	/****************************************************/
-	/*             For-цикл по коллекции                */
+	/*                range-based for loop              */
 	/****************************************************/
 	auto summFloats = 0.0f;
 	std::vector<float> vecFloats = { 0.1f, 0.2f, 0.3f };
@@ -109,20 +109,20 @@ void Lesson_c11::run()
 	std::cout << "Test \"foreach instruction\": " << summFloats << "\n";
 
 	/****************************************************/
-	/*      Обобщённые константные выражения            */
+	/*          geralized constant expressions          */
 	/****************************************************/
 
 	int some_value[getConstValue() + 2] = { 1, 2, 3, 4 }; // + спискок инициализации
 	constexpr double acceleration = 9.8;
 
 	/****************************************************/
-	/*                   Внешние шаблоны                */
+	/*                   extern template                */
 	/****************************************************/
 	externTemplatesTestInt(1);
 	ExternTemplatesTest<int> externTemplatesTest(2);
 
 	/****************************************************/
-	/*             Лямбда - функции и выражения         */
+	/*           lambda functions and expressions       */
 	/****************************************************/
 	// [](int x, int y) { return x + y; }
 	// [this]() { this->foo(); }
@@ -140,31 +140,31 @@ void Lesson_c11::run()
 	myLambdaFunc();
 
 	/****************************************************/
-	/*           Улучшение конструкторов объектов       */
+	/*         object construction improvement          */
 	/****************************************************/
 	ImproveConstructionClass improveConstructionClass;
 	improveConstructionClass.print();
 
 	/****************************************************/
-	/*           Спецификаторы default и delete         */
+	/*  defaulted and deleted special member functions  */
 	/****************************************************/
 	//SpecifierTestClass specifierTestClass(10.5f); //error
 	SpecifierTestClass specifierTestClass;
 	specifierTestClass.print();
 
 	/****************************************************/
-	/* Явное замещение виртуальных функций и финальность*/
+	/*           explicit overrides and final           */
 	/****************************************************/
 	InheritanceC inheritanceTest;
 
 	/****************************************************/
-	/*              Константа нулевого указателя        */
+	/*              null pointer constant               */
 	/****************************************************/
 	foo(NULL); // call foo(int);
 	foo(nullptr); // call foo(char *)
 
 	/****************************************************/
-	/*          Перечисления со строгой типизацией      */
+	/*             strongly typed enumerations          */
 	/****************************************************/
 	std::cout << "Test \"enum\": " << static_cast<unsigned int>(UintEnum::ONE) << " " << static_cast<unsigned int>(UintEnum::TWO) << "\n";
 	
