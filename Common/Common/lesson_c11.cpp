@@ -279,7 +279,15 @@ void stronglyTypedEnumerationsTest()
 /****************************************************/
 /*                  rvalue Reference                */
 /****************************************************/
-void rValueReferenceTest()
+void rvalueReferenceTest()
+{
+	// TODO
+}
+
+/****************************************************/
+/*                  Regular expressions             */
+/****************************************************/
+void regularExpressionsTest()
 {
 	// TODO
 }
@@ -297,5 +305,6 @@ void Lesson_c11::run()
 	overridesAndFinalTest();
 	nullPointerConstantTest();
 	stronglyTypedEnumerationsTest();
-	rValueReferenceTest();
+	rvalueReferenceTest();
+	regularExpressionsTest();
 }
