@@ -71,7 +71,7 @@ void typeInferenceTest()
 /****************************************************/
 void rangeBasedLoopTest()
 {
-	auto summFloats = 0.0f;
+	auto summFloats = 0.0f; // [type inference]
 	std::vector<float> vecFloats = { 0.1f, 0.2f, 0.3f }; // [initializer list]
 	for (auto data : vecFloats) // [type inference]
 	{
@@ -154,12 +154,12 @@ SortedIntVector& SortedIntVector::insert(int number)
 {
 #ifdef USE_PREDICATE
 	auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, IntComparer());
-	//TODO FIND MAX VALUE
+	// TODO FIND MAX VALUE
 #else
-	//auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [&](const int x, const int y) { m_valueMax = std::max(x,y); return x < y; });
+	// auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [&](const int x, const int y) { m_valueMax = std::max(x,y); return x < y; });
 
-	//int valueMax = 0;
-	//auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [&valueMax](const int x, const int y) { valueMax = std::max(x,y); return x < y; });
+	// int valueMax = 0;
+	// auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [&valueMax](const int x, const int y) { valueMax = std::max(x,y); return x < y; });
 	// m_valueMax = valueMax;
 
 	auto it = std::lower_bound(m_vec.begin(), m_vec.end(), number, [this](const int x, const int y) { this->m_valueMax = std::max(x, y); return x < y; });
@@ -215,7 +215,7 @@ private:
 
 void defaultedAndDeletedTest()
 {
-	//SpecifierTestClass specifierTestClass(10.5f); //error
+	// SpecifierTestClass specifierTestClass(10.5f); // error
 	SpecifierTestClass specifierTestClass;
 	specifierTestClass.print();
 }
@@ -259,7 +259,7 @@ void foo(int) { std::cout << "Test \"null pointer constant\": foo(int)\n"; }
 void nullPointerConstantTest()
 {
 	foo(NULL); // call foo(int);
-	foo(nullptr); // call foo(char *)
+	foo(nullptr); // call foo(char*)
 }
 
 /****************************************************/
