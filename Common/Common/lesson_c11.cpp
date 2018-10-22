@@ -277,11 +277,67 @@ void stronglyTypedEnumerationsTest()
 }
 
 /****************************************************/
-/*                  rvalue Reference                */
+/*                  rvalue reference                */
 /****************************************************/
+class RvalueReferenceClass
+{
+public:
+	RvalueReferenceClass(int* pValue)
+	{ 
+		m_pValue = pValue;
+		std::cout << "RvalueReferenceClass call constructor\n";
+	};
+	~RvalueReferenceClass()
+	{
+		if (m_pValue)
+		{
+			std::cout << "RvalueReferenceClass delete data\n";
+			delete m_pValue;
+			m_pValue = nullptr;
+		}
+	};
+	RvalueReferenceClass(RvalueReferenceClass& obj)
+	{
+		m_pValue = obj.getPtr();
+		std::cout << "RvalueReferenceClass call copy constructor\n";
+	};
+	RvalueReferenceClass(RvalueReferenceClass&& obj): m_pValue(obj.getPtr())
+	{
+		obj.m_pValue = 0;
+		std::cout << "RvalueReferenceClass call move constructor\n";
+	}
+	RvalueReferenceClass& operator=(RvalueReferenceClass&& obj)
+	{
+		std::swap(m_pValue, obj.m_pValue);
+		std::cout << "RvalueReferenceClass swap\n";
+		return *this;
+	}
+	int getValue() const { return *m_pValue; }
+	int* getPtr() const { return m_pValue; }
+
+private:
+	int* m_pValue = NULL;
+};
+
+template <typename T>
+void print(T&& x)
+{
+	std::cout << "Test \"rvalue reference\": " << ++x << "\n";
+}
+
 void rvalueReferenceTest()
 {
-	// TODO
+	RvalueReferenceClass a(new int(10));
+	RvalueReferenceClass b(new int(100));
+
+	print(a.getValue());
+	print(2);
+
+	auto tmp = std::move(a);
+	a = std::move(b);
+	b = std::move(tmp);
+
+	int tet = 5;
 }
 
 /****************************************************/
