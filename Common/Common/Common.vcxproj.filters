@@ -30,6 +30,9 @@
     <ClCompile Include="lesson_c11_a.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Lesson_bits.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lesson_c11_a.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lesson_bits.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,4 +10,4 @@ public:
 	void run();
 };
 
-#endif //LESSON_C11
+#endif //LESSON_C11_H
