@@ -11,7 +11,7 @@ void startLesson()
 
 int main()
 {
-	startLesson<Lesson_c11>();
 	startLesson<Lesson_bits>();
+	startLesson<Lesson_c11>();
 	return 1;
 }
