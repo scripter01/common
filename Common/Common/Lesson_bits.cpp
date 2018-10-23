@@ -76,11 +76,25 @@ void bitwiseOperationsTest()
 	// low 8 bits data [0..7]
 	const uint8_t lowData8 = data & 0x000000FF;
 	uint32_t dataTest = (uint32_t(highData8) << 24) | lowData8;
-	std::cout << "Test \"bitwise operations\": " << data << " " << dataTest;
+	std::cout << "Test \"bitwise operations\": " << data << " " << dataTest << "\n";
 
 	// low 10 bits data [0..9]
 	// 0011 1111 1111 = 3 F F
 	const uint8_t lowData10 = data & 0x000003FF;
+
+	enum TestFlags
+	{
+		TEST_FLAG_NONE = 0,
+		TEST_FLAG_WARNING = 1,
+		TEST_FLAG_ERROR = 2
+	};
+
+	uint32_t flags = TEST_FLAG_NONE;
+	flags |= TEST_FLAG_ERROR;
+	flags |= TEST_FLAG_WARNING;
+	flags ^= TEST_FLAG_WARNING;
+
+	std::cout << "Test \"bitwise operations\": " << flags  << " " << (flags & TEST_FLAG_ERROR) << " " << (flags & TEST_FLAG_WARNING) << "\n";
 }
 
 void Lesson_bits::run()
