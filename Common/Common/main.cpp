@@ -1,6 +1,7 @@
 #include "stdafx.h"
-#include "lesson_c11.h"
 #include "lesson_bits.h"
+#include "lesson_c11.h"
+#include "lesson_c14.h"
 
 template <typename T>
 void startLesson()
@@ -13,5 +14,6 @@ int main()
 {
 	startLesson<Lesson_bits>();
 	startLesson<Lesson_c11>();
+	startLesson<Lesson_c14>();
 	return 1;
 }
