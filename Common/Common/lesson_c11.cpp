@@ -340,6 +340,23 @@ void rvalueReferenceTest()
 	int tet = 5;
 }
 
+
+/****************************************************/
+/*           Alternative function syntax            */
+/****************************************************/
+
+template <typename T, typename E>
+auto addition(T a, E b) -> decltype(a + b) 
+{
+	return a + b;
+}
+
+void alternativeFunctionSyntaxTest()
+{
+	const auto data = addition(2, 3.14f); // c - float
+	std::cout << "Test \"alternative function syntax\": " << typeid(data).name() << "\n";
+}
+
 /****************************************************/
 /*                  Regular expressions             */
 /****************************************************/
@@ -362,5 +379,6 @@ void Lesson_c11::run()
 	nullPointerConstantTest();
 	stronglyTypedEnumerationsTest();
 	rvalueReferenceTest();
+	alternativeFunctionSyntaxTest();
 	regularExpressionsTest();
 }
