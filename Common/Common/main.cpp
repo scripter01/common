@@ -2,6 +2,7 @@
 #include "lesson_bits.h"
 #include "lesson_c11.h"
 #include "lesson_c14.h"
+#include "test.h"
 
 template <typename T>
 void startLesson()
@@ -15,5 +16,7 @@ int main()
 	startLesson<Lesson_bits>();
 	startLesson<Lesson_c11>();
 	startLesson<Lesson_c14>();
+	startLesson<Test>();
+	
 	return 1;
 }
