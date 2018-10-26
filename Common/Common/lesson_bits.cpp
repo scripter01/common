@@ -97,9 +97,23 @@ void bitwiseOperationsTest()
 	std::cout << "Test \"bitwise operations\": " << flags  << " " << (flags & TEST_FLAG_ERROR) << " " << (flags & TEST_FLAG_WARNING) << "\n";
 }
 
+/****************************************************/
+/*                       endian                     */
+/****************************************************/
+void endianTest()
+{
+	const uint8_t a = 1;
+	const uint8_t b = 1;
+	const uint8_t c = 1;
+	const uint8_t d = 1;
+	const uint32_t littleEndian = a | (b << 8) | (c << 16) | (d << 24);
+	const uint32_t bigEndian = d | (c << 8) | (b << 16) | (a << 24);
+}
+
 void Lesson_bits::run()
 {
 	bitFieldTest();
 	intToHexTest();
 	bitwiseOperationsTest();
+	endianTest();
 }
