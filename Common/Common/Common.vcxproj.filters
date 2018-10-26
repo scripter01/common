@@ -36,7 +36,7 @@
     <ClCompile Include="lesson_c14.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
+    <ClCompile Include="testPlayground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,7 +59,7 @@
     <ClInclude Include="lesson_c14.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="test.h">
+    <ClInclude Include="testPlayground.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

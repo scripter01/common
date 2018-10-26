@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "test.h"
+#include "testPlayground.h"
 
 struct IReceiver
 {
@@ -26,7 +26,7 @@ private:
 	ICallback* m_callback;
 };
 
-void Test::run()
+void TestPlayground::run()
 {
 	
 }
