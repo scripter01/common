@@ -119,7 +119,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="lessonBase.cpp" />
-    <ClCompile Include="Lesson_bits.cpp" />
+    <ClCompile Include="lesson_bits.cpp" />
     <ClCompile Include="lesson_c11.cpp" />
     <ClCompile Include="lesson_c11_a.cpp" />
     <ClCompile Include="lesson_c14.cpp" />
@@ -134,7 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lessonBase.h" />
-    <ClInclude Include="Lesson_bits.h" />
+    <ClInclude Include="lesson_bits.h" />
     <ClInclude Include="lesson_c11.h" />
     <ClInclude Include="lesson_c11_a.h" />
     <ClInclude Include="lesson_c14.h" />
