@@ -181,6 +181,7 @@ void SortedIntVector::print() const
 
 void lambdaFunctionsAndExpressionsTest()
 {
+	// [captures](arg1, arg2) -> result_type { /* code */ }
 	// [](int x, int y) { return x + y; }
 	// [this]() { this->foo(); }
 	// [](int x, int y) -> int { int z = x + y; return z; }

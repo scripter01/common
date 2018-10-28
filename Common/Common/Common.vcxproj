@@ -123,6 +123,7 @@
     <ClCompile Include="lesson_c11.cpp" />
     <ClCompile Include="lesson_c11_a.cpp" />
     <ClCompile Include="lesson_c14.cpp" />
+    <ClCompile Include="lesson_smartPointers.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
     </ClCompile>
@@ -137,6 +138,7 @@
     <ClInclude Include="lesson_c11.h" />
     <ClInclude Include="lesson_c11_a.h" />
     <ClInclude Include="lesson_c14.h" />
+    <ClInclude Include="lesson_smartPointers.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="testPlayground.h" />
   </ItemGroup>
