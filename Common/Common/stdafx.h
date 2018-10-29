@@ -12,3 +12,4 @@
 #include <algorithm>
 #include <iomanip>
 #include <sstream>
+#include <memory>
