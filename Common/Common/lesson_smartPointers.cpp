@@ -62,6 +62,7 @@ void weakPtrTest()
 {
 	std::shared_ptr<ptrTestClass> ptrX(new ptrTestClass("test1"));
 	std::shared_ptr<ptrTestClass> ptrY(new ptrTestClass("test2"));
+	//bad: retain cycle
 	ptrX->m_otherPtr = ptrY;
 	ptrY->m_otherPtr = ptrX;
 
