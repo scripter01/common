@@ -8,7 +8,7 @@ public:
 	~ptrTestClass() { std::cout << "delete ptrTestClass: " << m_value << "\n"; }
 
 	void doSomething() {}
-	std::shared_ptr<ptrTestClass> m_otherPtr;
+	std::shared_ptr<ptrTestClass> m_otherPtr; //std::weak_ptr<ptrTestClass> m_otherPtr;
 
 private:
 	const std::string m_value;
@@ -60,11 +60,6 @@ void sharedPtrTest()
 /****************************************************/
 void weakPtrTest()
 {
-	struct Widget 
-	{
-		std::shared_ptr<Widget> otherWidget;
-	};
-
 	std::shared_ptr<ptrTestClass> ptrX(new ptrTestClass("test1"));
 	std::shared_ptr<ptrTestClass> ptrY(new ptrTestClass("test2"));
 	ptrX->m_otherPtr = ptrY;

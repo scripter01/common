@@ -19,6 +19,7 @@ int main()
 	startLesson<Lesson_c14>();
 	startLesson<Lesson_smartPointers>();
 	startLesson<TestPlayground>();
-	
+
+	system("pause");	
 	return 1;
 }
