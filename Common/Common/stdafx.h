@@ -14,4 +14,6 @@
 #include <sstream>
 #include <memory>
 #include <thread>
+#include <mutex>
+
 #include "utils.h"
