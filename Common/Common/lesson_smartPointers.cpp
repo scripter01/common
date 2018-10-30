@@ -72,6 +72,8 @@ void weakPtrTest()
 		foo->doSomething();
 }
 
+// shared_from_this()
+
 void Lesson_smartPointers::run()
 {
 	autoPtrTest();
