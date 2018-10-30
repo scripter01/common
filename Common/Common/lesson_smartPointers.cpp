@@ -8,6 +8,7 @@ public:
 	~ptrTestClass() { std::cout << "delete ptrTestClass: " << m_value << "\n"; }
 
 	void doSomething() {}
+	const std::string& getValue() const { return m_value; }
 	std::shared_ptr<ptrTestClass> m_otherPtr; //std::weak_ptr<ptrTestClass> m_otherPtr;
 
 private:
@@ -72,6 +73,25 @@ void weakPtrTest()
 		foo->doSomething();
 }
 
+/****************************************************/
+/*                     deleter ptr                  */
+/****************************************************/
+struct deleterPtr
+{
+public:
+	void operator()(ptrTestClass* ptr) const
+	{
+		std::cout << "special delete ptrTestClass: " << ptr->getValue() << "\n";
+		if (ptr->m_otherPtr)
+			ptr->m_otherPtr.reset();
+	}
+};
+
+void deleterPtrTest()
+{
+	std::shared_ptr<ptrTestClass> ptrX(new ptrTestClass("test3"), deleterPtr());
+}
+
 // shared_from_this()
 
 void Lesson_smartPointers::run()
@@ -80,4 +100,5 @@ void Lesson_smartPointers::run()
 	uniquePtrTest();
 	sharedPtrTest();
 	weakPtrTest();
+	deleterPtrTest();
 }
