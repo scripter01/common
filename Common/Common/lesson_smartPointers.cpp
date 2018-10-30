@@ -78,7 +78,6 @@ void weakPtrTest()
 /****************************************************/
 struct deleterPtr
 {
-public:
 	void operator()(ptrTestClass* ptr) const
 	{
 		std::cout << "special delete ptrTestClass: " << ptr->getValue() << "\n";
@@ -92,7 +91,21 @@ void deleterPtrTest()
 	std::shared_ptr<ptrTestClass> ptrX(new ptrTestClass("test3"), deleterPtr());
 }
 
-// shared_from_this()
+/****************************************************/
+/*                  enable from this                */
+/****************************************************/
+struct sharedFromThisClassTest: public ptrTestClass, public std::enable_shared_from_this<sharedFromThisClassTest>
+{
+	sharedFromThisClassTest(const std::string& str) : ptrTestClass(str) {}
+	std::shared_ptr<sharedFromThisClassTest> getptr() { return shared_from_this(); }
+};
+
+void sharedFromThisTest()
+{
+	std::shared_ptr<sharedFromThisClassTest> ptrX(new sharedFromThisClassTest("sharedfromthis"));
+	std::shared_ptr<sharedFromThisClassTest> ptrY = ptrX->getptr();
+	std::shared_ptr<sharedFromThisClassTest> ptrZ = ptrX->shared_from_this();
+}
 
 void Lesson_smartPointers::run()
 {
@@ -101,4 +114,5 @@ void Lesson_smartPointers::run()
 	sharedPtrTest();
 	weakPtrTest();
 	deleterPtrTest();
+	sharedFromThisTest();
 }
