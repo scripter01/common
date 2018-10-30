@@ -8,7 +8,7 @@
 template<typename T>
 ExternTemplatesTest<T>::ExternTemplatesTest(T data)
 {
-	std::cout << "Test \"extern template\": " << data << "\n";
+	LOG_TEST("extern template", data);
 }
 
 void externTemplatesTestInt(int number)

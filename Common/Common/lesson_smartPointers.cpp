@@ -4,8 +4,8 @@
 class ptrTestClass
 {
 public:
-	ptrTestClass(const std::string& str): m_value(str){ std::cout << "create ptrTestClass: "<< m_value <<"\n"; }
-	~ptrTestClass() { std::cout << "delete ptrTestClass: " << m_value << "\n"; }
+	ptrTestClass(const std::string& str) : m_value(str) { LOG("create ptrTestClass: " << m_value); }
+	~ptrTestClass() { LOG("delete ptrTestClass: " << m_value); }
 
 	void doSomething() {}
 	const std::string& getValue() const { return m_value; }
@@ -22,9 +22,8 @@ void autoPtrTest()
 {
 	std::auto_ptr<ptrTestClass> ptrX(new ptrTestClass("auto1"));
 	std::auto_ptr<ptrTestClass> ptrY;
-
 	ptrY = ptrX;
-	std::cout << "Test \"auto_ptr\": " << ptrX.get() << " " << ptrY.get() << "\n";
+	LOG_TEST("auto_ptr", ptrX.get() << " " << ptrY.get());
 }
 
 /****************************************************/
@@ -34,10 +33,9 @@ void uniquePtrTest()
 {
 	std::unique_ptr<ptrTestClass> ptrX(new ptrTestClass("unique1"));
 	std::unique_ptr<ptrTestClass> ptrY;
-
 	//ptrY = ptrX; // error, can't copy
 	ptrY = std::move(ptrX);
-	std::cout << "Test \"unique_ptr\": " << ptrX.get() << " " << ptrY.get() << "\n";
+	LOG_TEST("unique_ptr", ptrX.get() << " " << ptrY.get());
 }
 
 /****************************************************/
@@ -53,7 +51,7 @@ void sharedPtrTest()
 	ptrTestClass* ptr = ptrZ.get();
 	ptrZ.reset();
 
-	std::cout << "Test \"unique_ptr\": " << ptrX.get() << " " << ptrY.get() << " " << ptrZ.get() << "\n";
+	LOG_TEST("shared_ptr", ptrX.get() << " " << ptrY.get() << " " << ptrZ.get());
 }
 
 /****************************************************/
@@ -80,7 +78,7 @@ struct deleterPtr
 {
 	void operator()(ptrTestClass* ptr) const
 	{
-		std::cout << "special delete ptrTestClass: " << ptr->getValue() << "\n";
+		LOG("special delete ptrTestClass: " << ptr->getValue());
 		if (ptr->m_otherPtr)
 			ptr->m_otherPtr.reset();
 	}

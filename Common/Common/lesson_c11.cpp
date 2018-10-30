@@ -63,7 +63,7 @@ void typeInferenceTest()
 	{
 		summInts += *it;
 	}
-	std::cout << "Test \"type inference\": " << summInts << "\n";
+	LOG_TEST("type inference", summInts);
 }
 
 /****************************************************/
@@ -77,7 +77,7 @@ void rangeBasedLoopTest()
 	{
 		summFloats += data;
 	}
-	std::cout << "Test \"range-based for loop\": " << summFloats << "\n";
+	LOG_TEST("range-based for loop", summFloats);
 }
 
 /****************************************************/
@@ -112,7 +112,7 @@ public:
 
 private:
 	ImproveConstructionClass(int _intValue) : intValue(_intValue) { print(); }
-	void print() const { std::cout << "Test \"object construction improvement\": " << intValue << " " << floatValue << "\n"; }
+	void print() const { LOG_TEST("object construction improvement", intValue << " " << floatValue); }
 
 private:
 	int intValue;
@@ -193,9 +193,9 @@ void lambdaFunctionsAndExpressionsTest()
 	int total = 0;
 	int value = 5;
 	[&, value](int x) { total += (x * value); } (1); 
-	std::cout << "Test \"lambda functions and expression\": " << total << "\n";
+	LOG_TEST("lambda functions and expression", total);
 
-	auto myLambdaFunc = [] { std::cout << "Test \"lambda functions and expression\"\n"; }; // [type inference]
+	auto myLambdaFunc = [] { LOG("lambda functions and expression"); }; // [type inference]
 	myLambdaFunc();
 }
 
@@ -208,7 +208,7 @@ public:
 	SpecifierTestClass() = default;
 	SpecifierTestClass(int x) { m_value = x; }
 	SpecifierTestClass(float x) = delete;
-	void print() const { std::cout << "Test \"defaulted and deleted special member functions\": " << m_value << "\n"; }
+	void print() const { LOG_TEST("defaulted and deleted special member functions", m_value); }
 
 private:
 	int m_value = 5; // [object construction improvement]
@@ -254,8 +254,8 @@ void overridesAndFinalTest()
 /****************************************************/
 /*              null pointer constant               */
 /****************************************************/
-void foo(char*) { std::cout << "Test \"null pointer constant\": foo(char*)\n"; }
-void foo(int) { std::cout << "Test \"null pointer constant\": foo(int)\n"; }
+void foo(char*) { LOG_TEST("null pointer constant", "foo(char*)"); }
+void foo(int) { LOG_TEST("null pointer constant", "foo(int)"); }
 
 void nullPointerConstantTest()
 {
@@ -274,7 +274,7 @@ enum class UintEnum : unsigned int
 
 void stronglyTypedEnumerationsTest()
 {
-	std::cout << "Test \"strongly typed enumerations\": " << static_cast<unsigned int>(UintEnum::ONE) << " " << static_cast<unsigned int>(UintEnum::TWO) << "\n";
+	LOG_TEST("strongly typed enumerations", static_cast<unsigned int>(UintEnum::ONE) << " " << static_cast<unsigned int>(UintEnum::TWO));
 }
 
 /****************************************************/
@@ -286,13 +286,13 @@ public:
 	RvalueReferenceClass(int* pValue)
 	{ 
 		m_pValue = pValue;
-		std::cout << "RvalueReferenceClass call constructor\n";
+		LOG("RvalueReferenceClass call constructor");
 	};
 	~RvalueReferenceClass()
 	{
 		if (m_pValue)
 		{
-			std::cout << "RvalueReferenceClass delete data\n";
+			LOG("RvalueReferenceClass delete data");
 			delete m_pValue;
 			m_pValue = nullptr;
 		}
@@ -300,17 +300,17 @@ public:
 	RvalueReferenceClass(RvalueReferenceClass& obj)
 	{
 		m_pValue = obj.getPtr();
-		std::cout << "RvalueReferenceClass call copy constructor\n";
+		LOG("RvalueReferenceClass call copy constructor");
 	};
 	RvalueReferenceClass(RvalueReferenceClass&& obj): m_pValue(obj.getPtr())
 	{
 		obj.m_pValue = 0;
-		std::cout << "RvalueReferenceClass call move constructor\n";
+		LOG("RvalueReferenceClass call move constructor");
 	}
 	RvalueReferenceClass& operator=(RvalueReferenceClass&& obj)
 	{
 		std::swap(m_pValue, obj.m_pValue);
-		std::cout << "RvalueReferenceClass swap\n";
+		LOG("RvalueReferenceClass swap");
 		return *this;
 	}
 	int getValue() const { return *m_pValue; }
@@ -323,7 +323,7 @@ private:
 template <typename T>
 void print(T&& x)
 {
-	std::cout << "Test \"rvalue reference\": " << ++x << "\n";
+	LOG_TEST("rvalue reference", ++x);
 }
 
 void rvalueReferenceTest()
@@ -355,7 +355,7 @@ auto addition(T a, E b) -> decltype(a + b)
 void alternativeFunctionSyntaxTest()
 {
 	const auto data = addition(2, 3.14f); // c - float
-	std::cout << "Test \"alternative function syntax\": " << typeid(data).name() << "\n";
+	LOG_TEST("alternative function syntax", typeid(data).name());
 }
 
 /****************************************************/

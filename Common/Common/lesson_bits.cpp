@@ -14,7 +14,7 @@ void bitFieldTest()
 		char b : 3;
 		char c : 2;
 	};
-	std::cout << "Test \"bit field\": " << sizeof(bitField1) << "\n"; // 1 byte
+	LOG_TEST("bit field", sizeof(bitField1));
 
 	struct bitField2
 	{
@@ -22,7 +22,7 @@ void bitFieldTest()
 		char b : 3;
 		char c : 3;
 	};
-	std::cout << "Test \"bit field\": " << sizeof(bitField2) << "\n"; // 2 byte
+	LOG_TEST("bit field", sizeof(bitField2));
 
 	struct bitField3
 	{
@@ -30,7 +30,7 @@ void bitFieldTest()
 		char b : 3;
 		char c : 3;
 	};
-	std::cout << "Test \"bit field\": " << sizeof(bitField3) << "\n"; // 8 byte, multiple of max type size
+	LOG_TEST("bit field", sizeof(bitField3)); // 8 byte, multiple of max type size
 }
 
 int logCeil(double base, double x)
@@ -45,10 +45,10 @@ void intToHexTest()
 {
 	//32bit int -> hex (16)
 	//log(16)(2^32)=23
-	std::cout << "Test \"intToHexStringTest\": "  << logCeil(16, pow(2, 32)) << "\n";
+	LOG_TEST("int to hex", logCeil(16, pow(2, 32)));
 	//64bit int -> Septenary (7)
 	//log(7)(2^64)=23
-	std::cout << "Test \"intToHexStringTest\": " << logCeil(7, pow(2, 64)) << "\n";
+	LOG_TEST("int to hex", logCeil(7, pow(2, 64)));
 
 	//2^8=256 per byte
 	//16^2=256 = 2 symbols per byte
@@ -62,7 +62,7 @@ void intToHexTest()
 
 	std::stringstream convertingStream;
 	convertingStream << "0x" << std::setfill('0') << std::setw(symbolCount) << data.c_str() << std::endl;
-	std::cout << "Test \"int to hex\": " << convertingStream.str();
+	LOG_TEST("int to hex", convertingStream.str());
 }
 
 /****************************************************/
@@ -76,7 +76,7 @@ void bitwiseOperationsTest()
 	// low 8 bits data [0..7]
 	const uint8_t lowData8 = data & 0x000000FF;
 	uint32_t dataTest = (uint32_t(highData8) << 24) | lowData8;
-	std::cout << "Test \"bitwise operations\": " << data << " " << dataTest << "\n";
+	LOG_TEST("bitwise operations", data << " " << dataTest);
 
 	// low 10 bits data [0..9]
 	// 0011 1111 1111 = 3 F F
@@ -94,7 +94,7 @@ void bitwiseOperationsTest()
 	flags |= TEST_FLAG_WARNING;
 	flags ^= TEST_FLAG_WARNING;
 
-	std::cout << "Test \"bitwise operations\": " << flags  << " " << (flags & TEST_FLAG_ERROR) << " " << (flags & TEST_FLAG_WARNING) << "\n";
+	LOG_TEST("bitwise operations", flags << " " << (flags & TEST_FLAG_ERROR) << " " << (flags & TEST_FLAG_WARNING));
 }
 
 /****************************************************/
