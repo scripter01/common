@@ -66,7 +66,7 @@ std::condition_variable g_cv;
 std::mutex g_mtx;
 std::atomic<bool> flag = false;
 
-#define THREAD_MAX_VALUE 9999999
+#define THREAD_MAX_VALUE 999999
 
 void threadInc(std::atomic<int>& num)
 {
@@ -74,7 +74,11 @@ void threadInc(std::atomic<int>& num)
 	while (true)
 	{
 		std::unique_lock<std::mutex> ulock(g_mtx);
-		g_cv.wait(ulock, []() {return flag == true; });
+
+		//g_cv.wait(ulock, []() {return flag == true; });
+		while (g_cv.wait_for(ulock, std::chrono::milliseconds(300), []() {return flag == true;} ) == false)
+			std::cout << "thread " << std::this_thread::get_id() << " wait" << std::endl;
+
 		num++;
 		if (num >= THREAD_MAX_VALUE)
 			break;
@@ -95,9 +99,12 @@ void threadStatus(std::atomic<int>& a, std::atomic<int>& b)
 	C_SPAN("threadStatus");
 	while (true)
 	{
-		LOG("a: " << a << ", b: "<< b);
-		if (a >= THREAD_MAX_VALUE && b >= THREAD_MAX_VALUE)
-			break;
+		if (a > 0 || b > 0)
+		{
+			LOG("a: " << a << ", b: " << b);
+			if (a >= THREAD_MAX_VALUE && b >= THREAD_MAX_VALUE)
+				break;
+		}
 		Sleep(150);
 	}
 }

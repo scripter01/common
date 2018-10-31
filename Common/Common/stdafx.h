@@ -18,5 +18,6 @@
 #include <array>
 #include <condition_variable>
 #include <atomic>
+#include <chrono>
 
 #include "utils.h"
