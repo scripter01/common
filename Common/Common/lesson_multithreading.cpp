@@ -68,7 +68,7 @@ std::mutex g_mtx;
 std::mutex g_mtxFlag;
 bool flag = false;
 
-#define CYCLE_COUNT 50
+#define CYCLE_COUNT 9999999
 
 void threadLog(int& num)
 {
@@ -80,14 +80,13 @@ void threadLog(int& num)
 		g_mtxFlag.lock();
 		num++;
 		g_mtxFlag.unlock();
-		Sleep(100);
 	}
 }
 
 void threadSignal()
 {
 	C_SPAN("threadSignal");
-	Sleep(1000);
+	Sleep(300);
 	g_mtxFlag.lock();
 	flag = true;
 	LOG("SIGNAL");
@@ -105,26 +104,24 @@ void threadStatus(int& a, int& b)
 		if (a == CYCLE_COUNT && b == CYCLE_COUNT)
 			break;
 		g_mtxFlag.unlock();
-		Sleep(300);
+		Sleep(50);
 	}
 }
 
 void conditionVaribaleTest()
 {
 	C_FLAG("condition variable test");
-
-	C_MSG("t1 and t2");
 	int a = 0;
 	std::thread t1(threadLog, std::ref(a));
 	int b = 0;
 	std::thread t2(threadLog, std::ref(b));
-	std::thread tSignal(threadSignal);
 	std::thread tStatus(threadStatus, std::ref(a), std::ref(b));
+	std::thread tSignal(threadSignal);
 
 	t1.join();
 	t2.join();
-	tSignal.join();
 	tStatus.join();
+	tSignal.join();
 }
 
 void Lesson_multithreading::run()
