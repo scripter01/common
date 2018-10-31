@@ -1,12 +1,19 @@
 #include "stdafx.h"
 #include "lesson_multithreading.h"
 
+#define CONCURRENCY_ENABLED 1
+
+#ifdef CONCURRENCY_ENABLED
 #include "cvmarkersobj.h"
 Concurrency::diagnostic::marker_series g_series;
-
 #define C_SPAN(name) Concurrency::diagnostic::span c_span(g_series, _T(name));
 #define C_FLAG(name) g_series.write_flag(_T(name));
 #define C_MSG(name) g_series.write_message(_T(name));
+#else
+#define C_SPAN(name) 
+#define C_FLAG(name) 
+#define C_MSG(name) 
+#endif
 
 void threadFoo(int& num, std::mutex* mtx)
 {
