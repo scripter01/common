@@ -16,5 +16,6 @@
 #include <thread>
 #include <mutex>
 #include <array>
+#include <condition_variable>
 
 #include "utils.h"
