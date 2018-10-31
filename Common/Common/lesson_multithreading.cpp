@@ -62,64 +62,43 @@ void mutexTest()
 /*                condition variable                */
 /****************************************************/
 
-class ThreadsController
-{
-public:
-	ThreadsController() : m_working(false) {}
-	bool canWorking() { return m_working; }
-	void setWorkState(bool state)
-	{
-		std::unique_lock<std::mutex> lck(m_mtx);
-		std::cout << "state " << state << std::endl;
-		m_working = state; 
-		if (m_working)
-			m_cv.notify_all();
-	}
-	void threadWait(std::unique_lock<std::mutex>& ulock) 
-	{ 
-		m_cv.wait(ulock, std::bind(&ThreadsController::canWorking, this));
-	}
-	std::mutex& getMutex() { return m_mtx; }
-private:
-	bool m_working;
-	std::condition_variable m_cv;
-	std::mutex m_mtx;
-};
+std::mutex g_mtxThreadLog;
+#define THREAD_LOG(a) { std::lock_guard<std::mutex> lock(g_mtxThreadLog); LOG("thread " << std::this_thread::get_id() <<": " << a); }
 
-ThreadsController g_threadsController;
+std::condition_variable g_cv;
+std::mutex g_mtx;
+bool flag = false;
 
-void threadLog()
+void threadLog(int& num)
 {
 	C_SPAN("threadLog");
-	while (true)
+	std::unique_lock<std::mutex> ulock(g_mtx);
+	THREAD_LOG("create");
+	g_cv.wait(ulock, [] {return flag == true; });
+	for (int i = 0; i < 100; i++)
 	{
-		std::unique_lock<std::mutex> ulock(g_threadsController.getMutex());
-		g_threadsController.threadWait(ulock);
-		std::cout << "thread " << std::this_thread::get_id() <<" is working" << std::endl;
-		Sleep(2000);
+		num++;
+		Sleep(100);
 	}
 }
 
-void threadInput()
+void threadSignal()
 {
-	C_SPAN("threadInput");
+	C_SPAN("threadSignal");
+	Sleep(1000);
+	std::lock_guard<std::mutex> lk(g_mtx);
+	flag = true;
+	g_cv.notify_all();
+}
+
+void threadStatus(int& a, int& b)
+{
+	C_SPAN("threadStatus");
 	while (true)
 	{
-		char inputData;
-		std::cin >> inputData;
-		std::cout << "\n";
-		switch (inputData)
-		{
-		case 'y':
-			g_threadsController.setWorkState(true);
-			break;
-		case 'n':
-			g_threadsController.setWorkState(false);
-			break;
-		default:
-			return;
-			break;
-		}
+		std::lock_guard<std::mutex> lk(g_mtx);
+		std::cout << "a: " << a << ", b: "<< b << std::endl;
+		Sleep(300);
 	}
 }
 
@@ -128,20 +107,19 @@ void conditionVaribaleTest()
 	C_FLAG("condition variable test");
 
 	C_MSG("t1 and t2");
-	std::thread t1(threadLog);
-	std::thread t2(threadLog);
-	std::thread t3(threadInput);
+	int a = 0;
+	std::thread t1(threadLog, std::ref(a));
+	int b = 0;
+	std::thread t2(threadLog, std::ref(b));
+	std::thread tSignal(threadSignal);
+	std::thread tStatus(threadStatus, std::ref(a), std::ref(b));
 
-	std::cout << "thread " << t1.get_id() << " is ready" << std::endl;
-	std::cout << "thread " << t2.get_id() << " is ready" << std::endl;
-	std::cout << "Input (y/n/...):" << std::endl;
-
-	if (t1.joinable())
+	/*if (t1.joinable())
 		t1.join();
 	if (t2.joinable())
-		t2.join();
-	if (t3.joinable())
-		t3.join();
+		t2.join();*/
+	if (tStatus.joinable())
+		tStatus.join();
 }
 
 void Lesson_multithreading::run()
