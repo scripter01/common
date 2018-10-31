@@ -62,9 +62,6 @@ void mutexTest()
 /*                condition variable                */
 /****************************************************/
 
-std::mutex g_mtxThreadLog;
-#define THREAD_LOG(a) { std::lock_guard<std::mutex> lock(g_mtxThreadLog); LOG("thread " << std::this_thread::get_id() <<": " << a); }
-
 std::condition_variable g_cv;
 std::mutex g_mtx;
 bool flag = false;
@@ -73,7 +70,6 @@ void threadLog(int& num)
 {
 	C_SPAN("threadLog");
 	std::unique_lock<std::mutex> ulock(g_mtx);
-	THREAD_LOG("create");
 	g_cv.wait(ulock, [] {return flag == true; });
 	for (int i = 0; i < 100; i++)
 	{
