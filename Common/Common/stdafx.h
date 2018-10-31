@@ -15,5 +15,6 @@
 #include <memory>
 #include <thread>
 #include <mutex>
+#include <array>
 
 #include "utils.h"

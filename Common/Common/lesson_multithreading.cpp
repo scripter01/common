@@ -15,17 +15,22 @@ Concurrency::diagnostic::marker_series g_series;
 #define C_MSG(name) 
 #endif
 
-void threadFoo(int& num, std::mutex* mtx)
+void threadPrint(int pass, int& idx, const std::string& str, std::mutex* mtx)
 {
 	C_SPAN("threadFoo");
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < pass; i++)
 	{
-		if (mtx)
-			mtx->lock();
-		std::cout << num << " ";
-		num++;
-		if (mtx)
-			mtx->unlock();
+		std::lock_guard<std::mutex> lock(*mtx);
+		/*if (mtx)
+			mtx->lock();*/
+
+		std::cout << str;
+#define COLUMN_COUNT 3
+		std::cout << (idx % COLUMN_COUNT == COLUMN_COUNT - 1 ? "\n" : " ");
+		idx++;
+
+		/*if (mtx)
+			mtx->unlock();*/
 	}
 }
 
@@ -37,17 +42,19 @@ void Lesson_multithreading::run()
 	C_FLAG("start threading");
 
 	std::mutex mtx;
-	static int num = 0;
+	const std::string strA = "aaaaaaaa";
+	const std::string strB = "bbbbbbbb";
+	int idx = 0;
 
 	C_MSG("t1 and t2");
-	std::thread t1(threadFoo, std::ref(num), &mtx);
-	std::thread t2(threadFoo, std::ref(num), &mtx);
+#define THREAD_ELEMENTS_COUNT 30
+	std::thread t1(threadPrint, THREAD_ELEMENTS_COUNT, std::ref(idx), ref(strA), &mtx);
+	std::thread t2(threadPrint, THREAD_ELEMENTS_COUNT, std::ref(idx), ref(strB), &mtx);
+
 	if (t1.joinable())
 		t1.join();
 	if (t2.joinable())
 		t2.join();
 
-	C_MSG("t3");
-	std::thread t3(threadFoo, std::ref(num), nullptr);
-	t3.detach();
+	//t3.detach();
 }
