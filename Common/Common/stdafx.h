@@ -17,5 +17,6 @@
 #include <mutex>
 #include <array>
 #include <condition_variable>
+#include <atomic>
 
 #include "utils.h"

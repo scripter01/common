@@ -65,55 +65,50 @@ void mutexTest()
 std::condition_variable g_cv;
 std::mutex g_mtx;
 
-std::mutex g_mtxFlag;
-bool flag = false;
+std::atomic<bool> flag = false;
 
 #define CYCLE_COUNT 9999999
 
-void threadLog(int& num)
+void threadLog(std::atomic<int>& num)
 {
 	C_SPAN("threadLog");
-	std::unique_lock<std::mutex> ulock(g_mtx);
-	g_cv.wait(ulock, [] {return flag == true; });
-	for (int i = 0; i < CYCLE_COUNT; i++)
+	while (true)
 	{
-		g_mtxFlag.lock();
+		std::unique_lock<std::mutex> ulock(g_mtx);
+		g_cv.wait(ulock, []() {return flag == true; });
 		num++;
-		g_mtxFlag.unlock();
+		if (num >= CYCLE_COUNT)
+			break;
 	}
 }
 
 void threadSignal()
 {
 	C_SPAN("threadSignal");
-	Sleep(300);
-	g_mtxFlag.lock();
+	Sleep(1000);
 	flag = true;
 	LOG("SIGNAL");
-	g_mtxFlag.unlock();
 	g_cv.notify_all();
 }
 
-void threadStatus(int& a, int& b)
+void threadStatus(std::atomic<int>& a, std::atomic<int>& b)
 {
 	C_SPAN("threadStatus");
 	while (true)
 	{
-		g_mtxFlag.lock();
 		LOG("a: " << a << ", b: "<< b);
-		if (a == CYCLE_COUNT && b == CYCLE_COUNT)
+		if (a >= CYCLE_COUNT && b >= CYCLE_COUNT)
 			break;
-		g_mtxFlag.unlock();
-		Sleep(50);
+		Sleep(150);
 	}
 }
 
 void conditionVaribaleTest()
 {
 	C_FLAG("condition variable test");
-	int a = 0;
+	std::atomic<int> a = 0;
+	std::atomic<int> b = 0;
 	std::thread t1(threadLog, std::ref(a));
-	int b = 0;
 	std::thread t2(threadLog, std::ref(b));
 	std::thread tStatus(threadStatus, std::ref(a), std::ref(b));
 	std::thread tSignal(threadSignal);
