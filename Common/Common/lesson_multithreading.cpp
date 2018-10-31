@@ -64,16 +64,22 @@ void mutexTest()
 
 std::condition_variable g_cv;
 std::mutex g_mtx;
+
+std::mutex g_mtxFlag;
 bool flag = false;
+
+#define CYCLE_COUNT 50
 
 void threadLog(int& num)
 {
 	C_SPAN("threadLog");
 	std::unique_lock<std::mutex> ulock(g_mtx);
 	g_cv.wait(ulock, [] {return flag == true; });
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < CYCLE_COUNT; i++)
 	{
+		g_mtxFlag.lock();
 		num++;
+		g_mtxFlag.unlock();
 		Sleep(100);
 	}
 }
@@ -82,8 +88,10 @@ void threadSignal()
 {
 	C_SPAN("threadSignal");
 	Sleep(1000);
-	std::lock_guard<std::mutex> lk(g_mtx);
+	g_mtxFlag.lock();
 	flag = true;
+	LOG("SIGNAL");
+	g_mtxFlag.unlock();
 	g_cv.notify_all();
 }
 
@@ -92,8 +100,11 @@ void threadStatus(int& a, int& b)
 	C_SPAN("threadStatus");
 	while (true)
 	{
-		std::lock_guard<std::mutex> lk(g_mtx);
-		std::cout << "a: " << a << ", b: "<< b << std::endl;
+		g_mtxFlag.lock();
+		LOG("a: " << a << ", b: "<< b);
+		if (a == CYCLE_COUNT && b == CYCLE_COUNT)
+			break;
+		g_mtxFlag.unlock();
 		Sleep(300);
 	}
 }
@@ -110,12 +121,10 @@ void conditionVaribaleTest()
 	std::thread tSignal(threadSignal);
 	std::thread tStatus(threadStatus, std::ref(a), std::ref(b));
 
-	/*if (t1.joinable())
-		t1.join();
-	if (t2.joinable())
-		t2.join();*/
-	if (tStatus.joinable())
-		tStatus.join();
+	t1.join();
+	t2.join();
+	tSignal.join();
+	tStatus.join();
 }
 
 void Lesson_multithreading::run()
