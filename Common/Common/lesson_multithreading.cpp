@@ -64,12 +64,11 @@ void mutexTest()
 
 std::condition_variable g_cv;
 std::mutex g_mtx;
-
 std::atomic<bool> flag = false;
 
-#define CYCLE_COUNT 9999999
+#define THREAD_MAX_VALUE 9999999
 
-void threadLog(std::atomic<int>& num)
+void threadInc(std::atomic<int>& num)
 {
 	C_SPAN("threadLog");
 	while (true)
@@ -77,7 +76,7 @@ void threadLog(std::atomic<int>& num)
 		std::unique_lock<std::mutex> ulock(g_mtx);
 		g_cv.wait(ulock, []() {return flag == true; });
 		num++;
-		if (num >= CYCLE_COUNT)
+		if (num >= THREAD_MAX_VALUE)
 			break;
 	}
 }
@@ -97,7 +96,7 @@ void threadStatus(std::atomic<int>& a, std::atomic<int>& b)
 	while (true)
 	{
 		LOG("a: " << a << ", b: "<< b);
-		if (a >= CYCLE_COUNT && b >= CYCLE_COUNT)
+		if (a >= THREAD_MAX_VALUE && b >= THREAD_MAX_VALUE)
 			break;
 		Sleep(150);
 	}
@@ -108,8 +107,8 @@ void conditionVaribaleTest()
 	C_FLAG("condition variable test");
 	std::atomic<int> a = 0;
 	std::atomic<int> b = 0;
-	std::thread t1(threadLog, std::ref(a));
-	std::thread t2(threadLog, std::ref(b));
+	std::thread t1(threadInc, std::ref(a));
+	std::thread t2(threadInc, std::ref(b));
 	std::thread tStatus(threadStatus, std::ref(a), std::ref(b));
 	std::thread tSignal(threadSignal);
 
