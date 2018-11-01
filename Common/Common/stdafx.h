@@ -19,5 +19,6 @@
 #include <condition_variable>
 #include <atomic>
 #include <chrono>
+#include <future>
 
 #include "utils.h"
