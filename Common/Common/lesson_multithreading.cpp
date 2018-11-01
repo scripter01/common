@@ -65,7 +65,7 @@ void mutexTest()
 std::condition_variable g_cv;
 std::mutex g_mtx;
 
-#define THREAD_MAX_VALUE 9999999
+#define THREAD_MAX_VALUE 999999
 
 void threadInc(std::atomic<int>& num, std::atomic<bool>& flag)
 {
@@ -182,12 +182,128 @@ void futureTest()
 	}
 }
 
+/****************************************************/
+/*                thread dependencies               */
+/****************************************************/
+
+class ThreadTask
+{
+public:
+	virtual ~ThreadTask() {}
+	virtual void run() = 0;
+};
+
+class Thread
+{
+public:
+	Thread(ThreadTask* t) : m_finished(false), m_task(t) {}
+	virtual ~Thread() {}
+
+	void wait()
+	{
+		std::unique_lock<std::mutex> ulock(m_mutex);
+		//m_condThisJobFinished.wait(ulock, [this] { return this->m_finished; });
+		while (!m_finished)
+			m_cv.wait(ulock);
+	}
+
+	void start()
+	{
+		std::thread thread(&Thread::runTask, this);
+		thread.detach();
+	}
+
+	bool isFinished() const { return m_finished; }
+
+private:
+	void runTask()
+	{
+		waitDependence();
+		if (m_task)
+			m_task->run();
+		std::unique_lock<std::mutex> ulock(m_mutex);
+		m_finished = true;
+		m_cv.notify_all();
+	}
+
+	virtual void waitDependence() {}
+
+private:
+	std::mutex m_mutex;
+	std::condition_variable m_cv;
+	bool m_finished;
+	std::shared_ptr<ThreadTask> m_task;
+};
+
+class ThreadDependence : public Thread
+{
+public:
+	ThreadDependence(ThreadTask* t) : Thread(t) {}
+	void addDependence(const std::shared_ptr<Thread>& thread) { m_dependencies.push_back(thread); }
+
+private:
+	virtual void waitDependence() 
+	{
+		for (const auto& weakPtrThread : m_dependencies)
+		{
+			if (std::shared_ptr<Thread> ptrThread = weakPtrThread.lock())
+				ptrThread->wait();
+		}
+		m_dependencies.clear();
+	}
+
+private:
+	std::vector<std::weak_ptr<Thread>> m_dependencies;
+};
+
+class TaskTest: public ThreadTask
+{
+public:
+	TaskTest(const int step) : m_stepCount(step) {}
+	virtual void run()
+	{
+		for (int i = 0; i < m_stepCount; i++)
+		{
+			LOG("THREAD: " << std::this_thread::get_id() << " WAIT: " << i+1 << "/" << m_stepCount);
+			Sleep(1000);
+		}
+	}
+
+private:
+	const int m_stepCount;
+};
+
+template<typename T>
+std::shared_ptr<T> createThread(ThreadTask* task)
+{
+	return std::shared_ptr<T>(new T(task));
+}
+
+void threadDependenciesTest()
+{
+	std::shared_ptr<Thread> threadA = createThread<Thread>(new TaskTest(3));
+	std::shared_ptr<Thread> threadB = createThread<Thread>(new TaskTest(2));
+
+	std::shared_ptr<ThreadDependence> thread— = createThread<ThreadDependence>(new TaskTest(1));
+	thread—->addDependence(threadA);
+	thread—->addDependence(threadB);
+
+	thread—->start();
+	threadB->start();
+	threadA->start();
+
+	threadA->wait();
+	threadB->wait();
+	thread—->wait();
+}
+
 void Lesson_multithreading::run()
 {
 	LOG("Hardware concurrency: " << std::thread::hardware_concurrency());
 	LOG("Main thread id: " << std::this_thread::get_id());
 
 	mutexTest();
+	threadDependenciesTest();
 	conditionVaribaleTest();
 	futureTest();
 
