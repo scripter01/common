@@ -125,6 +125,63 @@ void conditionVaribaleTest()
 	tSignal.join();
 }
 
+/****************************************************/
+/*                       future                     */
+/****************************************************/
+
+int threadWait(int time)
+{
+	LOG("thread " << std::this_thread::get_id() << " wait: " << time);
+	Sleep(time);
+	return time;
+}
+
+int threadWaitFuture(std::future<int>& fut)
+{
+	const int time = fut.get();
+	return threadWait(time);
+}
+
+void futureTest()
+{
+	C_FLAG("future test");
+	{
+		std::future<int> fut = std::async(threadWait, 1);
+		LOG("thread end: " << fut.get());
+	}
+	
+	{
+		std::packaged_task<int(int)> tsk(threadWait);
+		std::future<int> fut = tsk.get_future();
+		std::thread thread(std::move(tsk), 1);
+		LOG("thread end: " << fut.get());
+		thread.join();
+	}
+
+	{
+		const int time = 2;
+		std::promise<int> prom;
+		std::future<int> fut = prom.get_future();
+		std::thread thread(threadWaitFuture, std::ref(fut));
+		prom.set_value(time);
+		thread.join();
+		LOG("thread end: " << time);
+	}
+
+	{
+		std::promise<int> prom;
+		std::future<int> futInput = prom.get_future();
+
+		std::packaged_task<int(std::future<int>&)> tsk(threadWaitFuture);
+		std::future<int> futResult = tsk.get_future();
+		std::thread thread(std::move(tsk), std::ref(futInput));
+
+		prom.set_value(3);
+		LOG("thread end: " << futResult.get());
+		thread.join();
+	}
+}
+
 void Lesson_multithreading::run()
 {
 	LOG("Hardware concurrency: " << std::thread::hardware_concurrency());
@@ -132,6 +189,7 @@ void Lesson_multithreading::run()
 
 	mutexTest();
 	conditionVaribaleTest();
+	futureTest();
 
 	//t3.detach();
 }
