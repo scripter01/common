@@ -7,13 +7,16 @@ class ThreadTask
 {
 public:
 	virtual ~ThreadTask() = default;
-	virtual void run() = 0;
+	virtual void run() {};// = 0;
 };
 
 class ThreadPool
 {
+public:
 	ThreadPool(uint32_t threadsCount = 0);
 	~ThreadPool();
+
+	void addTask(ThreadTask* task);
 
 private:
 	ThreadPool(const ThreadPool& rhs) = delete;

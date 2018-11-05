@@ -37,3 +37,9 @@ void ThreadPool::destroy()
 			thread.join();
 	}
 }
+
+void ThreadPool::addTask(ThreadTask* task)
+{
+	std::unique_ptr<ThreadTask> ptr(task);
+	m_workQueue.push(std::move(ptr));
+}
