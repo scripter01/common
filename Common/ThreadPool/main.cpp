@@ -1,6 +1,15 @@
 #include "stdafx.h"
 #include "ThreadPool.h"
 
+void waitSec(const int sec)
+{
+	for (int i = 0; i < sec; i++)
+	{
+		LOG("THREAD: " << std::this_thread::get_id() << " WAIT: " << i + 1 << "/" << sec);
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+	}
+}
+
 class WaitThreadTask: public ThreadTask
 {
 public:
@@ -9,11 +18,7 @@ public:
 
 	void run()
 	{
-		for (int i = 0; i < m_stepCount; i++)
-		{
-			LOG("THREAD: " << std::this_thread::get_id() << " WAIT: " << i + 1 << "/" << m_stepCount);
-			std::this_thread::sleep_for(std::chrono::seconds(1));
-		}
+		waitSec(m_stepCount);
 	}
 
 private:
@@ -25,6 +30,11 @@ int main()
 	ThreadPool threadPool;
 	threadPool.addTask(new WaitThreadTask(10));
 	threadPool.addTask(new WaitThreadTask(5));
+	threadPool.addTask(new ThreadFuncTask([]()
+	{
+		waitSec(6);
+	}));
+
 	while (true){}
 	return 1;
 }

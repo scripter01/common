@@ -8,4 +8,14 @@ public:
 	virtual void run() {};// = 0;
 };
 
+class ThreadFuncTask: public ThreadTask
+{
+public:
+	ThreadFuncTask(std::function<void()> func): m_func(func) {}
+	virtual void run() { m_func(); }
+
+private:
+	std::function<void()> m_func;
+};
+
 #endif //THREAD_TASK_H
