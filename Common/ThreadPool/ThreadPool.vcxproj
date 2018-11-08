@@ -125,10 +125,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ThreadPool.cpp" />
+    <ClCompile Include="ThreadTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="ThreadPool.h" />
+    <ClInclude Include="ThreadTask.h" />
     <ClInclude Include="ThreadTaskQueue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,13 +2,7 @@
 #define THREAD_POOL_H
 
 #include "ThreadTaskQueue.h"
-
-class ThreadTask
-{
-public:
-	virtual ~ThreadTask() = default;
-	virtual void run() {};// = 0;
-};
+#include "ThreadTask.h"
 
 class ThreadPool
 {
