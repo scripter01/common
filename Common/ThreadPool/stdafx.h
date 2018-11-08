@@ -24,3 +24,6 @@
 #include <future>
 #include <assert.h>
 #include <queue>
+
+extern std::mutex g_mtxLog;
+#define LOG(a) { std::lock_guard<std::mutex> lock(g_mtxLog); std::cout << a << std::endl; }

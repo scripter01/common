@@ -1,9 +1,6 @@
 #include "stdafx.h"
 #include "ThreadPool.h"
 
-std::mutex g_mtxLog;
-#define LOG(a) { std::lock_guard<std::mutex> lock(g_mtxLog); std::cout << a << std::endl; }
-
 class WaitThreadTask: public ThreadTask
 {
 public:
@@ -26,8 +23,8 @@ private:
 int main()
 {
 	ThreadPool threadPool;
-	threadPool.addTask(new WaitThreadTask(3));
-	threadPool.addTask(new WaitThreadTask(4));
-	system("pause");
+	threadPool.addTask(new WaitThreadTask(10));
+	threadPool.addTask(new WaitThreadTask(5));
+	while (true){}
 	return 1;
 }
