@@ -11,6 +11,7 @@ public:
 	~ThreadPool();
 
 	void addTask(ThreadTask* task);
+	void addTask(std::unique_ptr<ThreadTask>& task);
 
 private:
 	ThreadPool(const ThreadPool& rhs) = delete;

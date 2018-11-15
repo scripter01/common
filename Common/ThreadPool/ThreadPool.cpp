@@ -41,5 +41,10 @@ void ThreadPool::destroy()
 void ThreadPool::addTask(ThreadTask* task)
 {
 	std::unique_ptr<ThreadTask> ptr(task);
-	m_workQueue.push(std::move(ptr));
+	addTask(ptr);
+}
+
+void ThreadPool::addTask(std::unique_ptr<ThreadTask>& task)
+{
+	m_workQueue.push(std::move(task));
 }
