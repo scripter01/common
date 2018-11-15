@@ -10,14 +10,15 @@ void waitSec(const int sec)
 	}
 }
 
-class WaitThreadTask: public ThreadTask
+class WaitThreadTask: public ThreadFuncTask
 {
 public:
 	WaitThreadTask(const uint32_t step): m_stepCount(step)
 	{}
 
-	void run()
+	void execute()
 	{
+		ThreadFuncTask::execute();
 		waitSec(m_stepCount);
 	}
 
@@ -34,6 +35,7 @@ int main()
 	{
 		waitSec(6);
 	}));
+	threadPool.addTask(new ThreadFuncTask());
 
 	while (true){}
 	return 1;

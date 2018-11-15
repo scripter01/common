@@ -5,14 +5,20 @@ class ThreadTask
 {
 public:
 	virtual ~ThreadTask() = default;
-	virtual void run() = 0;
+	virtual bool ready() { return true; }
+	virtual void run() { execute(); }
+
+	virtual void execute() { LOG("TASK execute in thread: " << std::this_thread::get_id()); };
 };
 
 class ThreadFuncTask: public ThreadTask
 {
 public:
-	ThreadFuncTask(std::function<void()> func): m_func(func) {}
-	virtual void run() { m_func(); }
+	ThreadFuncTask(std::function<void()> func = nullptr);
+	virtual void run();
+
+private:
+	void executeFunc();
 
 private:
 	std::function<void()> m_func;
