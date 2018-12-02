@@ -1,6 +1,8 @@
 #ifndef ABSTRACT_FACTORY_H
 #define ABSTRACT_FACTORY_H
 
+#include <iostream> 
+
 class SoldierAnt
 {
 public:
@@ -26,13 +28,13 @@ public:
 class RedSoldierAnt: public SoldierAnt
 {
 public:
-	void info() { printf("Red Soldier Ant"); }
+	void info() { std::cout << "Red Soldier Ant" << "\n"; }
 };
 
 class RedWorkerAnt: public WorkerAnt
 {
 public:
-	void info() { printf("Red Worker Ant"); }
+	void info() { std::cout << "Red Worker Ant" << "\n"; }
 };
 
 class RedAntsFactory : public AntsFactory
