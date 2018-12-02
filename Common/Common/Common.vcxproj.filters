@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="patterns">
+      <UniqueIdentifier>{73fba370-3ca6-4dd3-a442-d1985c712f5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,6 +54,9 @@
     <ClCompile Include="lesson_stl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="patterns\abstract_factory.cpp">
+      <Filter>patterns</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -85,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="lesson_stl.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="patterns\abstract_factory.h">
+      <Filter>patterns</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

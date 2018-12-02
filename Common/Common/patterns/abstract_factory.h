@@ -1,0 +1,5 @@
+#ifndef ABSTRACT_FACTORY_H
+#define ABSTRACT_FACTORY_H
+
+
+#endif //ABSTRACT_FACTORY_H
