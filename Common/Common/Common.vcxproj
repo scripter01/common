@@ -149,6 +149,7 @@
     <ClInclude Include="lesson_smartPointers.h" />
     <ClInclude Include="lesson_stl.h" />
     <ClInclude Include="patterns\abstract_factory.h" />
+    <ClInclude Include="patterns\builder.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="testPlayground.h" />
     <ClInclude Include="utils.h" />

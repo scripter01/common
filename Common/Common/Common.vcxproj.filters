@@ -92,5 +92,8 @@
     <ClInclude Include="patterns\abstract_factory.h">
       <Filter>patterns</Filter>
     </ClInclude>
+    <ClInclude Include="patterns\builder.h">
+      <Filter>patterns</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
