@@ -29,7 +29,7 @@ public:
 class InputHandler
 {
 public:
-	void Update()
+	void update()
 	{
 		if (isPressedX())
 			mButtonX->execute();

@@ -33,8 +33,8 @@ public:
 	Terrain(int moveCost, bool isWater) :
 		mMoveCost(moveCost), mIsWater(isWater)
 	{}
-	int GetMoveCost() const { return mMoveCost; }
-	bool IsWater() const { return mIsWater; }
+	int getMoveCost() const { return mMoveCost; }
+	bool isWater() const { return mIsWater; }
 
 private:
 	int mMoveCost;
@@ -59,7 +59,7 @@ public:
 		return *mTiles[x][y];
 	}
 
-	void Init()
+	void init()
 	{
 		for (auto w = 0; w < MAP_WIDTH; w++)
 		{
