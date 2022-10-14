@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "lesson_multithreading.h"
 
-#define CONCURRENCY_ENABLED 1
+#include <windows.h>
+
+//#define CONCURRENCY_ENABLED 1
 
 #ifdef CONCURRENCY_ENABLED
 #include "cvmarkersobj.h"

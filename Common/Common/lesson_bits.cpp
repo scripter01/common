@@ -134,7 +134,7 @@ void sashaTest()
 	2 ^ 16 = 1  1111   F   15
 	*/
 
-	uint16_t params;
+	uint16_t params = 0;
 	/*
 	bits 0..7   = A(8)
 	bits 8..13  = A(6)
